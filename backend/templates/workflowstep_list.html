@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block title %}Workflowsteps | NexusFlow{% endblock %}
+{% block page_title %}Workflowsteps{% endblock %}
+{% block content %}
+<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem;flex-wrap:wrap;gap:1rem">
+  <form class="search-bar" method="get" style="flex:1;margin-bottom:0">
+    <input type="text" name="search" value="{{ search }}" placeholder="Search workflowsteps...">
+    <select name="status" onchange="this.form.submit()">
+      <option value="">All Step Type</option>
+      <option value="action" {% if status_filter == 'action' %}selected{% endif %}>Action</option>
+      <option value="condition" {% if status_filter == 'condition' %}selected{% endif %}>Condition</option>
+      <option value="delay" {% if status_filter == 'delay' %}selected{% endif %}>Delay</option>
+      <option value="notification" {% if status_filter == 'notification' %}selected{% endif %}>Notification</option>
+    </select>
+    <button type="submit" class="btn btn-primary btn-sm">Search</button>
+  </form>
+  <a href="/workflowsteps/create/" class="btn btn-primary">+ New WorkflowStep</a>
+</div>
+
+<div class="card">
+  {% if records %}
+  <table>
+    <thead>
+      <tr><th>Workflow Name</th><th>Step Name</th><th>Step Type</th><th>Position</th><th>Active</th><th>Actions</th></tr>
+    </thead>
+    <tbody>
+      {% for r in records %}
+      <tr>
+        <td><a href="/workflowsteps/{{ r.pk }}/edit/"><strong>{{ r.workflow_name }}</strong></a></td>
+        <td>{{ r.step_name|default:"-" }}</td>
+        <td><span class="badge badge-blue">{{ r.get_step_type_display }}</span></td>
+        <td>{{ r.position|default:"-" }}</td>
+        <td><span class="badge {{ r.active|yesno:\"badge-green,badge-red\" }}">{{ r.active|yesno:\"Yes,No\" }}</span></td>
+        <td class="actions">
+          <a href="/workflowsteps/{{ r.pk }}/edit/" class="btn btn-primary btn-sm">Edit</a>
+          <form method="post" action="/workflowsteps/{{ r.pk }}/delete/" style="display:inline" onsubmit="return confirm('Delete?')">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger btn-sm">Del</button>
+          </form>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+  <div class="empty">
+    <p>No workflowsteps found.</p>
+    <a href="/workflowsteps/create/" class="btn btn-primary" style="margin-top:1rem">Create WorkflowStep</a>
+  </div>
+  {% endif %}
+</div>
+{% endblock %}
