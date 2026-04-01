@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block title %}Workflows | NexusFlow{% endblock %}
+{% block page_title %}Workflows{% endblock %}
+{% block content %}
+<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem;flex-wrap:wrap;gap:1rem">
+  <form class="search-bar" method="get" style="flex:1;margin-bottom:0">
+    <input type="text" name="search" value="{{ search }}" placeholder="Search workflows...">
+    <select name="status" onchange="this.form.submit()">
+      <option value="">All Trigger</option>
+      <option value="manual" {% if status_filter == 'manual' %}selected{% endif %}>Manual</option>
+      <option value="scheduled" {% if status_filter == 'scheduled' %}selected{% endif %}>Scheduled</option>
+      <option value="event" {% if status_filter == 'event' %}selected{% endif %}>Event</option>
+      <option value="webhook" {% if status_filter == 'webhook' %}selected{% endif %}>Webhook</option>
+    </select>
+    <button type="submit" class="btn btn-primary btn-sm">Search</button>
+  </form>
+  <a href="/workflows/create/" class="btn btn-primary">+ New Workflow</a>
+</div>
+
+<div class="card">
+  {% if records %}
+  <table>
+    <thead>
+      <tr><th>Name</th><th>Category</th><th>Trigger</th><th>Status</th><th>Steps Count</th><th>Actions</th></tr>
+    </thead>
+    <tbody>
+      {% for r in records %}
+      <tr>
+        <td><a href="/workflows/{{ r.pk }}/edit/"><strong>{{ r.name }}</strong></a></td>
+        <td>{{ r.category|default:"-" }}</td>
+        <td><span class="badge badge-blue">{{ r.get_trigger_display }}</span></td>
+        <td><span class="badge badge-blue">{{ r.get_status_display }}</span></td>
+        <td>{{ r.steps_count|default:"-" }}</td>
+        <td class="actions">
+          <a href="/workflows/{{ r.pk }}/edit/" class="btn btn-primary btn-sm">Edit</a>
+          <form method="post" action="/workflows/{{ r.pk }}/delete/" style="display:inline" onsubmit="return confirm('Delete?')">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger btn-sm">Del</button>
+          </form>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+  <div class="empty">
+    <p>No workflows found.</p>
+    <a href="/workflows/create/" class="btn btn-primary" style="margin-top:1rem">Create Workflow</a>
+  </div>
+  {% endif %}
+</div>
+{% endblock %}
