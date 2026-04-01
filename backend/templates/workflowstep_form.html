@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block title %}{% if editing %}Edit{% else %}New{% endif %} WorkflowStep | NexusFlow{% endblock %}
+{% block page_title %}{% if editing %}Edit WorkflowStep{% else %}New WorkflowStep{% endif %}{% endblock %}
+{% block content %}
+<div class="card" style="max-width:750px">
+  <form method="post">
+    {% csrf_token %}
+    <div class="form-row">
+      <div class="form-group">
+        <label>Workflow Name</label>
+        <input type="text" name="workflow_name" value="{{ record.workflow_name|default:'' }}">
+      </div>
+      <div class="form-group">
+        <label>Step Name</label>
+        <input type="text" name="step_name" value="{{ record.step_name|default:'' }}">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Step Type</label>
+        <select name="step_type">
+          <option value="action" {% if record.step_type == 'action' %}selected{% endif %}>Action</option>
+          <option value="condition" {% if record.step_type == 'condition' %}selected{% endif %}>Condition</option>
+          <option value="delay" {% if record.step_type == 'delay' %}selected{% endif %}>Delay</option>
+          <option value="notification" {% if record.step_type == 'notification' %}selected{% endif %}>Notification</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Position</label>
+        <input type="number" name="position" value="{{ record.position|default:'0' }}">
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Config</label>
+      <textarea name="config">{{ record.config|default:'' }}</textarea>
+    </div>
+    <div class="form-group">
+      <div class="checkbox-wrapper">
+        <input type="checkbox" name="active" id="id_active" {% if record.active %}checked{% endif %}>
+        <label for="id_active" style="margin-bottom:0">Active</label>
+      </div>
+    </div>
+
+    <div style="display:flex;gap:0.75rem;margin-top:1rem">
+      <button type="submit" class="btn btn-primary">{% if editing %}Update{% else %}Create{% endif %} WorkflowStep</button>
+      <a href="/workflowsteps/" class="btn" style="background:var(--border);color:var(--text)">Cancel</a>
+    </div>
+  </form>
+</div>
+{% endblock %}
