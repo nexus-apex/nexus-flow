@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22><rect width=%2232%22 height=%2232%22 rx=%228%22 fill=%22#7c3aed%22/><text x=%2216%22 y=%2223%22 font-size=%2220%22 text-anchor=%22middle%22 fill=%22white%22 font-weight=%22bold%22 font-family=%22sans-serif%22>N</text></svg>">
+<title>Login | NexusFlow</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#0f0f1a;color:#e2e8f0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:2rem}
+.bg-grid{position:fixed;inset:0;background-image:linear-gradient(rgba(99,102,241,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(99,102,241,0.03) 1px,transparent 1px);background-size:50px 50px;pointer-events:none}
+.glow{position:fixed;width:600px;height:600px;background:radial-gradient(circle,rgba(99,102,241,0.12) 0%,transparent 70%);top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none}
+.login-card{background:#1a1a2e;border:1px solid #2d2d4e;border-radius:24px;padding:3rem;width:100%;max-width:420px;position:relative;z-index:1;box-shadow:0 25px 50px rgba(0,0,0,0.5)}
+.logo{font-size:2rem;font-weight:800;background:linear-gradient(135deg,#7c3aed,#3b82f6);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;text-align:center;margin-bottom:0.25rem}
+.tagline{text-align:center;color:#94a3b8;font-size:0.85rem;margin-bottom:2rem}
+.form-group{margin-bottom:1.25rem}
+.form-group label{display:block;font-size:0.85rem;color:#94a3b8;margin-bottom:0.4rem;font-weight:500}
+.form-group input{width:100%;background:rgba(255,255,255,0.05);border:1px solid #2d2d4e;border-radius:12px;padding:0.75rem 1rem;color:#e2e8f0;font-size:0.95rem;outline:none;transition:border 0.2s}
+.form-group input:focus{border-color:#7c3aed}
+.btn{width:100%;background:linear-gradient(135deg,#7c3aed,#6d28d9);border:none;border-radius:12px;padding:0.85rem;color:white;font-weight:700;font-size:1rem;cursor:pointer;transition:opacity 0.2s;margin-top:0.5rem}
+.btn:hover{opacity:0.9}
+.error{background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.3);color:#ef4444;padding:0.75rem;border-radius:10px;font-size:0.85rem;margin-bottom:1rem;text-align:center}
+.demo-info{margin-top:1.5rem;background:rgba(99,102,241,0.08);border:1px solid rgba(99,102,241,0.2);border-radius:10px;padding:0.75rem;text-align:center;font-size:0.8rem;color:#94a3b8}
+.demo-info code{background:rgba(255,255,255,0.1);padding:0.15rem 0.4rem;border-radius:4px;font-size:0.8rem}
+.brand{text-align:center;margin-top:2rem;font-size:0.75rem;color:#94a3b8;opacity:0.5}
+</style>
+</head>
+<body>
+<div class="bg-grid"></div>
+<div class="glow"></div>
+<div class="login-card">
+  <div class="logo">NexusFlow</div>
+  <p class="tagline">Workflow Automation</p>
+  {% if error %}<div class="error">{{ error }}</div>{% endif %}
+  <form method="post">
+    {% csrf_token %}
+    <div class="form-group">
+      <label>Username</label>
+      <input type="text" name="username" placeholder="Enter username" autofocus required>
+    </div>
+    <div class="form-group">
+      <label>Password</label>
+      <input type="password" name="password" placeholder="Enter password" required>
+    </div>
+    <button type="submit" class="btn">Sign In</button>
+  </form>
+  <div class="demo-info">
+    Demo: <code>admin</code> / <code>Admin@2024</code>
+  </div>
+  <p class="brand">Part of Nexus Suite &mdash; 75 Enterprise SaaS Apps</p>
+</div>
+</body>
+</html>
