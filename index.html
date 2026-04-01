@@ -3,215 +3,158 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22><rect width=%2232%22 height=%2232%22 rx=%228%22 fill=%22%237c3aed%22/><text x=%2216%22 y=%2223%22 font-size=%2220%22 text-anchor=%22middle%22 fill=%22white%22 font-weight=%22bold%22 font-family=%22sans-serif%22>N</text></svg>">
 <title>NexusFlow | Nexus Suite</title>
 <style>
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  :root {
-    --primary: #6366f1;
-    --primary-dark: #4f46e5;
-    --bg: #0f0f1a;
-    --card: #1a1a2e;
-    --text: #e2e8f0;
-    --muted: #94a3b8;
-    --border: #2d2d4e;
-    --green: #10b981;
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --primary:#7c3aed;
+    --primary-dark:#6d28d9;
+    --gradient-end:#3b82f6;
+    --bg:#0f0f1a;
+    --card:#1a1a2e;
+    --text:#e2e8f0;
+    --muted:#94a3b8;
+    --border:#2d2d4e;
   }
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 2rem;
-    overflow: hidden;
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    padding:2rem;
+    overflow:hidden;
   }
-  .bg-grid {
-    position: fixed; inset: 0;
-    background-image: linear-gradient(rgba(99,102,241,0.05) 1px, transparent 1px),
-                      linear-gradient(90deg, rgba(99,102,241,0.05) 1px, transparent 1px);
-    background-size: 50px 50px;
-    pointer-events: none;
+  .bg-grid{
+    position:fixed;inset:0;
+    background-image:linear-gradient(rgba(124,58,237,0.05) 1px,transparent 1px),
+                     linear-gradient(90deg,rgba(124,58,237,0.05) 1px,transparent 1px);
+    background-size:50px 50px;
+    pointer-events:none;
   }
-  .glow {
-    position: fixed;
-    width: 600px; height: 600px;
-    background: radial-gradient(circle, rgba(99,102,241,0.15) 0%, transparent 70%);
-    top: 50%; left: 50%;
-    transform: translate(-50%, -50%);
-    pointer-events: none;
-    animation: pulse 4s ease-in-out infinite;
+  .glow{
+    position:fixed;
+    width:600px;height:600px;
+    background:radial-gradient(circle,rgba(124,58,237,0.15) 0%,transparent 70%);
+    top:50%;left:50%;
+    transform:translate(-50%,-50%);
+    pointer-events:none;
+    animation:pulse 4s ease-in-out infinite;
   }
-  @keyframes pulse { 0%,100%{opacity:0.5;transform:translate(-50%,-50%) scale(1)} 50%{opacity:1;transform:translate(-50%,-50%) scale(1.1)} }
-  .card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 24px;
-    padding: 3rem;
-    max-width: 600px;
-    width: 100%;
-    text-align: center;
-    position: relative;
-    z-index: 1;
-    backdrop-filter: blur(10px);
-    box-shadow: 0 25px 50px rgba(0,0,0,0.5), 0 0 0 1px rgba(99,102,241,0.1);
+  @keyframes pulse{0%,100%{opacity:0.5;transform:translate(-50%,-50%) scale(1)}50%{opacity:1;transform:translate(-50%,-50%) scale(1.1)}}
+  .card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:24px;
+    padding:3rem;
+    max-width:620px;
+    width:100%;
+    text-align:center;
+    position:relative;
+    z-index:1;
+    backdrop-filter:blur(10px);
+    box-shadow:0 25px 50px rgba(0,0,0,0.5),0 0 0 1px rgba(124,58,237,0.1);
   }
-  .badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    background: rgba(99,102,241,0.15);
-    border: 1px solid rgba(99,102,241,0.3);
-    color: #a5b4fc;
-    padding: 0.35rem 1rem;
-    border-radius: 100px;
-    font-size: 0.75rem;
-    font-weight: 600;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    margin-bottom: 1.5rem;
+  .icon-circle{
+    width:72px;height:72px;
+    background:linear-gradient(135deg,var(--primary),var(--gradient-end));
+    border-radius:20px;
+    display:flex;align-items:center;justify-content:center;
+    margin:0 auto 1.5rem;
+    font-size:2rem;
+    box-shadow:0 8px 32px rgba(124,58,237,0.3);
   }
-  .dot { width: 6px; height: 6px; background: var(--primary); border-radius: 50%; animation: blink 1.5s ease-in-out infinite; }
-  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
-  .logo {
-    font-size: 3rem;
-    font-weight: 800;
-    background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #ec4899 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    margin-bottom: 0.5rem;
-    line-height: 1.1;
+  .badge{
+    display:inline-flex;align-items:center;gap:0.5rem;
+    background:rgba(124,58,237,0.15);
+    border:1px solid rgba(124,58,237,0.3);
+    color:#7c3aed;padding:0.35rem 1rem;
+    border-radius:100px;font-size:0.75rem;font-weight:600;
+    letter-spacing:0.05em;text-transform:uppercase;margin-bottom:1.5rem;
   }
-  .subtitle {
-    color: var(--muted);
-    font-size: 1.1rem;
-    margin-bottom: 2rem;
-    line-height: 1.6;
+  .dot{width:6px;height:6px;background:var(--primary);border-radius:50%;animation:blink 1.5s ease-in-out infinite}
+  @keyframes blink{0%,100%{opacity:1}50%{opacity:0.3}}
+  .logo{
+    font-size:2.8rem;font-weight:800;
+    background:linear-gradient(135deg,#7c3aed 0%,#3b82f6 100%);
+    -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+    background-clip:text;margin-bottom:0.5rem;line-height:1.1;
   }
-  .divider {
-    height: 1px;
-    background: linear-gradient(90deg, transparent, var(--border), transparent);
-    margin: 2rem 0;
+  .subtitle{color:var(--muted);font-size:1.05rem;margin-bottom:2rem;line-height:1.6}
+  .divider{height:1px;background:linear-gradient(90deg,transparent,var(--border),transparent);margin:1.5rem 0}
+  .features{display:grid;grid-template-columns:1fr 1fr;gap:0.6rem;margin-bottom:1.5rem;text-align:left}
+  .feature{display:flex;align-items:center;gap:0.5rem;font-size:0.85rem;color:var(--muted)}
+  .feature-icon{color:var(--primary);font-size:1rem;font-weight:bold}
+  .notify-form{display:flex;gap:0.75rem;margin-bottom:1.5rem}
+  .notify-input{
+    flex:1;background:rgba(255,255,255,0.05);
+    border:1px solid var(--border);border-radius:12px;
+    padding:0.75rem 1rem;color:var(--text);font-size:0.9rem;
+    outline:none;transition:border-color 0.2s;
   }
-  .features {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 0.75rem;
-    margin-bottom: 2rem;
-    text-align: left;
+  .notify-input:focus{border-color:var(--primary)}
+  .notify-input::placeholder{color:var(--muted)}
+  .btn{
+    background:linear-gradient(135deg,var(--primary) 0%,var(--primary-dark) 100%);
+    border:none;border-radius:12px;padding:0.75rem 1.5rem;
+    color:white;font-weight:600;font-size:0.9rem;
+    cursor:pointer;transition:opacity 0.2s,transform 0.1s;white-space:nowrap;
   }
-  .feature {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-size: 0.85rem;
-    color: var(--muted);
-  }
-  .feature-icon { color: var(--green); font-size: 1rem; }
-  .notify-form {
-    display: flex;
-    gap: 0.75rem;
-    margin-bottom: 1.5rem;
-  }
-  .notify-input {
-    flex: 1;
-    background: rgba(255,255,255,0.05);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 0.75rem 1rem;
-    color: var(--text);
-    font-size: 0.9rem;
-    outline: none;
-    transition: border-color 0.2s;
-  }
-  .notify-input:focus { border-color: var(--primary); }
-  .notify-input::placeholder { color: var(--muted); }
-  .btn {
-    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-    border: none;
-    border-radius: 12px;
-    padding: 0.75rem 1.5rem;
-    color: white;
-    font-weight: 600;
-    font-size: 0.9rem;
-    cursor: pointer;
-    transition: opacity 0.2s, transform 0.1s;
-    white-space: nowrap;
-  }
-  .btn:hover { opacity: 0.9; transform: translateY(-1px); }
-  .btn:active { transform: translateY(0); }
-  .meta {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 1.5rem;
-    font-size: 0.8rem;
-    color: var(--muted);
-  }
-  .meta-item { display: flex; align-items: center; gap: 0.4rem; }
-  .meta-dot { width: 4px; height: 4px; background: var(--border); border-radius: 50%; }
-  .nexus-brand {
-    margin-top: 2rem;
-    font-size: 0.75rem;
-    color: var(--muted);
-    opacity: 0.6;
-  }
-  .nexus-brand span {
-    background: linear-gradient(135deg, #6366f1, #8b5cf6);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    font-weight: 700;
-  }
+  .btn:hover{opacity:0.9;transform:translateY(-1px)}
+  .btn:active{transform:translateY(0)}
+  .meta{display:flex;align-items:center;justify-content:center;gap:1.5rem;font-size:0.8rem;color:var(--muted)}
+  .meta-dot{width:4px;height:4px;background:var(--border);border-radius:50%}
+  .nexus-brand{margin-top:2rem;font-size:0.75rem;color:var(--muted);opacity:0.6}
+  .nexus-brand a{color:#7c3aed;text-decoration:none;font-weight:700}
+  .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin:1.5rem 0}
+  .stat{text-align:center}
+  .stat-num{font-size:1.5rem;font-weight:800;background:linear-gradient(135deg,#7c3aed,#3b82f6);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+  .stat-label{font-size:0.7rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.05em}
   @media(max-width:500px){
     .features{grid-template-columns:1fr}
     .notify-form{flex-direction:column}
     .card{padding:2rem 1.5rem}
+    .stats{grid-template-columns:repeat(3,1fr)}
   }
 </style>
 </head>
 <body>
 <div class="bg-grid"></div>
 <div class="glow"></div>
-
 <div class="card">
-  <div class="badge">
-    <div class="dot"></div>
-    Under Development
-  </div>
-
+  <div class="icon-circle"><svg width="32" height="32" fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24"><line x1="6" y1="3" x2="6" y2="15"/><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M18 9a9 9 0 01-9 9"/></svg></div>
+  <div class="badge"><div class="dot"></div>Under Development</div>
   <div class="logo">NexusFlow</div>
-  <p class="subtitle">Workflow Automation iPaaS - Better than Zapier + Make<br>Launching soon &mdash; Better than the best.</p>
+  <p class="subtitle">Workflow Automation Engine<br>Launching soon &mdash; Better than the best.</p>
 
-  <div class="features">
-    <div class="feature"><span class="feature-icon">✓</span> Multi-tenant SaaS</div>
-    <div class="feature"><span class="feature-icon">✓</span> AI-Powered</div>
-    <div class="feature"><span class="feature-icon">✓</span> Mobile Apps</div>
-    <div class="feature"><span class="feature-icon">✓</span> WhatsApp Integration</div>
-    <div class="feature"><span class="feature-icon">✓</span> Stripe + Razorpay</div>
-    <div class="feature"><span class="feature-icon">✓</span> 100K RPS Scale</div>
+  <div class="stats">
+    <div class="stat"><div class="stat-num">99.9%</div><div class="stat-label">Uptime</div></div>
+    <div class="stat"><div class="stat-num">100K</div><div class="stat-label">RPS Scale</div></div>
+    <div class="stat"><div class="stat-num">24/7</div><div class="stat-label">Support</div></div>
   </div>
 
+  <div class="divider"></div>
+  <div class="features">
+    <div class="feature"><span class="feature-icon">&#10003;</span> Visual Builder</div><div class="feature"><span class="feature-icon">&#10003;</span> Trigger Actions</div><div class="feature"><span class="feature-icon">&#10003;</span> API Webhooks</div><div class="feature"><span class="feature-icon">&#10003;</span> Conditional Logic</div><div class="feature"><span class="feature-icon">&#10003;</span> Schedule Tasks</div><div class="feature"><span class="feature-icon">&#10003;</span> 100+ Integrations</div>
+  </div>
   <div class="divider"></div>
 
   <div class="notify-form">
     <input class="notify-input" type="email" placeholder="Enter your email for early access">
-    <button class="btn">Notify Me</button>
+    <button class="btn" onclick="alert('Thanks! We will notify you when Flow launches.')">Notify Me</button>
   </div>
-
   <div class="meta">
-    <div class="meta-item">🔒 SSL Secured</div>
+    <span>&#128274; SSL Secured</span>
     <div class="meta-dot"></div>
-    <div class="meta-item">⚡ Enterprise Ready</div>
+    <span>&#9889; Enterprise Ready</span>
     <div class="meta-dot"></div>
-    <div class="meta-item">🇮🇳 Made in India</div>
+    <span>&#127470;&#127475; Made in India</span>
   </div>
-
-  <p class="nexus-brand">Part of <span>Nexus Suite</span> &mdash; 75 Enterprise SaaS Apps</p>
+  <p class="nexus-brand">Part of <a href="https://nexuscrm.ogts.in">Nexus Suite</a> &mdash; 75 Enterprise SaaS Apps</p>
 </div>
-
 </body>
 </html>
