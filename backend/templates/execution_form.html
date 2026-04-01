@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block title %}{% if editing %}Edit{% else %}New{% endif %} Execution | NexusFlow{% endblock %}
+{% block page_title %}{% if editing %}Edit Execution{% else %}New Execution{% endif %}{% endblock %}
+{% block content %}
+<div class="card" style="max-width:750px">
+  <form method="post">
+    {% csrf_token %}
+    <div class="form-row">
+      <div class="form-group">
+        <label>Workflow Name</label>
+        <input type="text" name="workflow_name" value="{{ record.workflow_name|default:'' }}">
+      </div>
+      <div class="form-group">
+        <label>Started At</label>
+        <input type="date" name="started_at" value="{{ record.started_at|date:'Y-m-d'|default:'' }}">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Completed At</label>
+        <input type="date" name="completed_at" value="{{ record.completed_at|date:'Y-m-d'|default:'' }}">
+      </div>
+      <div class="form-group">
+        <label>Status</label>
+        <select name="status">
+          <option value="running" {% if record.status == 'running' %}selected{% endif %}>Running</option>
+          <option value="completed" {% if record.status == 'completed' %}selected{% endif %}>Completed</option>
+          <option value="failed" {% if record.status == 'failed' %}selected{% endif %}>Failed</option>
+          <option value="cancelled" {% if record.status == 'cancelled' %}selected{% endif %}>Cancelled</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Steps Completed</label>
+        <input type="number" name="steps_completed" value="{{ record.steps_completed|default:'0' }}">
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Error Message</label>
+      <textarea name="error_message">{{ record.error_message|default:'' }}</textarea>
+    </div>
+
+    <div style="display:flex;gap:0.75rem;margin-top:1rem">
+      <button type="submit" class="btn btn-primary">{% if editing %}Update{% else %}Create{% endif %} Execution</button>
+      <a href="/executions/" class="btn" style="background:var(--border);color:var(--text)">Cancel</a>
+    </div>
+  </form>
+</div>
+{% endblock %}
