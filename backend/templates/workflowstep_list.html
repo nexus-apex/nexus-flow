@@ -30,7 +30,7 @@
         <td>{{ r.step_name|default:"-" }}</td>
         <td><span class="badge badge-blue">{{ r.get_step_type_display }}</span></td>
         <td>{{ r.position|default:"-" }}</td>
-        <td><span class="badge {{ r.active|yesno:\"badge-green,badge-red\" }}">{{ r.active|yesno:\"Yes,No\" }}</span></td>
+        <td><span class="badge {{ r.active|yesno:"badge-green,badge-red" }}">{{ r.active|yesno:"Yes,No" }}</span></td>
         <td class="actions">
           <a href="/workflowsteps/{{ r.pk }}/edit/" class="btn btn-primary btn-sm">Edit</a>
           <form method="post" action="/workflowsteps/{{ r.pk }}/delete/" style="display:inline" onsubmit="return confirm('Delete?')">
